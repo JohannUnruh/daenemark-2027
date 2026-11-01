@@ -259,7 +259,7 @@
       backdrop-filter: blur(14px);
       -webkit-backdrop-filter: blur(14px);
       border-bottom: 1.5px solid var(--card-border);
-      padding: 10px 0;
+      padding: 10px 0 8px 0;
       margin-bottom: 36px;
       box-shadow: 0 4px 16px rgba(30, 54, 45, 0.08);
       transition: all 0.2s ease;
@@ -272,7 +272,8 @@
       white-space: nowrap;
       scrollbar-width: none;
       -webkit-overflow-scrolling: touch;
-      padding: 4px 2px;
+      padding: 4px 8px;
+      scroll-behavior: smooth;
     }
     .nav-scroll::-webkit-scrollbar { display: none; }
 
@@ -283,12 +284,15 @@
       font-weight: 600;
       padding: 8px 16px;
       border-radius: var(--radius-full);
-      transition: all 0.2s ease;
+      transition: all 0.25s cubic-bezier(0.2, 0.8, 0.2, 1);
       background: #ffffff;
       border: 1.5px solid var(--card-border);
       flex-shrink: 0;
       box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
       user-select: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
     }
     .nav-link:hover {
       color: var(--sage-deep);
@@ -299,7 +303,20 @@
       background: var(--sage-deep) !important;
       color: #ffffff !important;
       border-color: var(--sage-deep) !important;
-      box-shadow: 0 2px 8px rgba(39, 69, 56, 0.25);
+      box-shadow: 0 3px 12px rgba(39, 69, 56, 0.3);
+      transform: scale(1.04);
+    }
+
+    .nav-progress-bar {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      height: 3px;
+      width: 0%;
+      background: linear-gradient(90deg, var(--sage-deep), #c86d51);
+      transition: width 0.08s linear;
+      border-radius: 0 2px 2px 0;
+      pointer-events: none;
     }
 
     /* Content Sections */
@@ -754,6 +771,7 @@
         <a href="#faq" class="nav-link">❓ Häufige Fragen</a>
       </div>
     </div>
+    <div class="nav-progress-bar" id="nav-progress-bar"></div>
   </nav>
 
   <!-- Hauptinhalt -->
@@ -1279,37 +1297,126 @@
     }
   </script>
 
-  <!-- ScrollSpy für die mitscrollenden Navigation-Pills -->
+  <!-- ScrollSpy & Horizontal Auto-Scroll der Navigation-Pills -->
   <script>
     (function() {
+      const navScroll = document.querySelector('.nav-scroll');
       const navLinks = document.querySelectorAll('.quick-nav .nav-link');
+      const progressBar = document.getElementById('nav-progress-bar');
       if (!navLinks.length) return;
 
       const sections = [];
       navLinks.forEach(link => {
-        const id = link.getAttribute('href').substring(1);
-        const el = document.getElementById(id);
-        if (el) sections.push({ id, el, link });
+        const href = link.getAttribute('href');
+        if (href && href.startsWith('#')) {
+          const id = href.substring(1);
+          const el = document.getElementById(id);
+          if (el) sections.push({ id, el, link });
+        }
       });
+      if (!sections.length) return;
 
-      function onScroll() {
+      let currentActiveId = null;
+      let isManualClick = false;
+      let manualClickTimeout = null;
+      let ticking = false;
+
+      function centerPill(link) {
+        if (!navScroll || !link) return;
+        const containerRect = navScroll.getBoundingClientRect();
+        const linkRect = link.getBoundingClientRect();
+        const currentScroll = navScroll.scrollLeft;
+        // Berechne Zielposition für perfekte horizontale Zentrierung der aktiven Pille
+        const targetScroll = currentScroll + (linkRect.left - containerRect.left) - (containerRect.width / 2) + (linkRect.width / 2);
+
+        navScroll.scrollTo({
+          left: Math.max(0, targetScroll),
+          behavior: 'smooth'
+        });
+      }
+
+      function setActiveSection(sec, fromClick) {
+        if (!sec) return;
+        if (currentActiveId === sec.id && !fromClick) return;
+        currentActiveId = sec.id;
+
+        navLinks.forEach(l => l.classList.remove('active'));
+        sec.link.classList.add('active');
+        centerPill(sec.link);
+      }
+
+      function updateOnScroll() {
         const scrollY = window.scrollY;
-        const trigger = scrollY + 110;
-        let activeFound = false;
+        const winHeight = window.innerHeight;
+        const docHeight = document.documentElement.scrollHeight || document.body.scrollHeight;
+        const maxScroll = docHeight - winHeight;
+
+        // 1. Lesefortschrittsbalken aktualisieren
+        if (progressBar && maxScroll > 0) {
+          const pct = Math.min(100, Math.max(0, (scrollY / maxScroll) * 100));
+          progressBar.style.width = pct + '%';
+        }
+
+        // 2. Klicksperre gegen Überschreiben bei weichem Sprungscroll
+        if (isManualClick) return;
+
+        // 3. Wenn ganz unten auf der Seite angekommen: letzten Abschnitt aktivieren
+        if (scrollY + winHeight >= docHeight - 50) {
+          setActiveSection(sections[sections.length - 1], false);
+          return;
+        }
+
+        // 4. Triggerpunkt: Sticky-Bar (~65px) + 50px Lesepuffer
+        const trigger = scrollY + 115;
+        let active = null;
 
         for (let i = sections.length - 1; i >= 0; i--) {
           const s = sections[i];
-          if (s.el.offsetTop <= trigger && !activeFound) {
-            s.link.classList.add('active');
-            activeFound = true;
-          } else {
-            s.link.classList.remove('active');
+          if (s.el.offsetTop <= trigger) {
+            active = s;
+            break;
           }
+        }
+
+        // Wenn noch ganz oben vor dem ersten Abschnitt
+        if (!active && sections.length > 0) {
+          active = sections[0];
+        }
+
+        if (active) {
+          setActiveSection(active, false);
         }
       }
 
-      window.addEventListener('scroll', onScroll, { passive: true });
-      onScroll();
+      // Klick-Handler für direkte Pillen-Navigation
+      navLinks.forEach(link => {
+        link.addEventListener('click', function(e) {
+          const targetId = this.getAttribute('href').substring(1);
+          const targetSec = sections.find(s => s.id === targetId);
+          if (targetSec) {
+            isManualClick = true;
+            clearTimeout(manualClickTimeout);
+            setActiveSection(targetSec, true);
+            manualClickTimeout = setTimeout(() => {
+              isManualClick = false;
+            }, 800);
+          }
+        });
+      });
+
+      // 60fps rAF Scroll-Listener
+      window.addEventListener('scroll', function() {
+        if (!ticking) {
+          requestAnimationFrame(() => {
+            updateOnScroll();
+            ticking = false;
+          });
+          ticking = true;
+        }
+      }, { passive: true });
+
+      // Initiale Prüfung beim Seitenaufruf
+      updateOnScroll();
     })();
   </script>
 </body>
