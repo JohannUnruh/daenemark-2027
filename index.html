@@ -109,29 +109,29 @@
       overflow: hidden;
     }
 
-    /* Wehende, vergrößerte Dänemark-Fahne (Dannebrog) mit Mast & Stoff-Schimmer */
+    /* Flatternde Dänemark-Fahne (Dannebrog) oben links in der Ecke */
     .hero-flag-wrapper {
       position: absolute;
-      top: 18px;
-      left: 26px;
+      top: 14px;
+      left: 14px;
       z-index: 10;
       pointer-events: none;
       display: flex;
       align-items: flex-start;
-      perspective: 900px;
+      perspective: 700px;
     }
 
     .danebrog-waving {
-      width: 128px;
-      height: 94px;
-      background: #c8102e; /* Dannebrog Rot */
-      border-radius: 6px;
+      width: 112px;
+      height: 82px;
+      background: #c8102e; /* Original Dannebrog Rot */
+      border-radius: 5px;
       position: relative;
       overflow: hidden;
-      transform-origin: center center;
-      box-shadow: 0 10px 25px rgba(200, 16, 46, 0.28), 0 3px 8px rgba(0,0,0,0.12);
-      border: 2px solid rgba(255, 255, 255, 0.9);
-      animation: flagWave 3.8s ease-in-out infinite alternate;
+      transform-origin: 10% 50%;
+      box-shadow: 0 8px 20px rgba(200, 16, 46, 0.28), 0 2px 6px rgba(0,0,0,0.1);
+      border: 1.5px solid rgba(255, 255, 255, 0.95);
+      animation: flagFlutter 1.8s ease-in-out infinite alternate;
     }
 
     /* Weißes Skandinavisches Kreuz */
@@ -139,57 +139,64 @@
       position: absolute;
       top: 0;
       bottom: 0;
-      left: 41px;
-      width: 14px;
+      left: 36px;
+      width: 12px;
       background: #ffffff;
-      box-shadow: 0 0 2px rgba(0,0,0,0.1);
+      box-shadow: 0 0 2px rgba(0,0,0,0.08);
     }
     .flag-cross-h {
       position: absolute;
       left: 0;
       right: 0;
-      top: 40px;
-      height: 14px;
+      top: 35px;
+      height: 12px;
       background: #ffffff;
-      box-shadow: 0 0 2px rgba(0,0,0,0.1);
+      box-shadow: 0 0 2px rgba(0,0,0,0.08);
     }
 
-    /* Wehender Stoff-Glanz & Schatten */
+    /* Flatternder Stoff-Glanz & Schatten */
     .flag-shimmer {
       position: absolute;
       inset: 0;
       background: linear-gradient(
-        110deg,
-        rgba(255, 255, 255, 0.25) 0%,
-        rgba(0, 0, 0, 0.22) 28%,
-        rgba(255, 255, 255, 0.38) 55%,
-        rgba(0, 0, 0, 0.2) 78%,
+        115deg,
+        rgba(255, 255, 255, 0.3) 0%,
+        rgba(0, 0, 0, 0.22) 25%,
+        rgba(255, 255, 255, 0.4) 50%,
+        rgba(0, 0, 0, 0.2) 75%,
         rgba(255, 255, 255, 0.15) 100%
       );
       background-size: 200% 100%;
       mix-blend-mode: overlay;
-      animation: flagShimmer 3.8s ease-in-out infinite alternate;
+      animation: flagFlutterShimmer 1.8s ease-in-out infinite alternate;
       pointer-events: none;
     }
 
-    @keyframes flagWave {
+    /* Echtes Tuch-Flattern im Wind */
+    @keyframes flagFlutter {
       0% {
-        transform: rotate(-12deg) rotateY(0deg) skewY(-2deg) scale(0.99);
+        transform: rotate(-13deg) rotateY(-4deg) skewY(-3deg) scaleY(0.97);
+      }
+      25% {
+        transform: rotate(-9deg) rotateY(14deg) skewY(2.5deg) scaleY(1.02);
       }
       50% {
-        transform: rotate(-8deg) rotateY(14deg) skewY(2.5deg) scale(1.02);
+        transform: rotate(-14deg) rotateY(-6deg) skewY(-2deg) scaleY(0.98);
+      }
+      75% {
+        transform: rotate(-8deg) rotateY(12deg) skewY(3deg) scaleY(1.03);
       }
       100% {
-        transform: rotate(-14deg) rotateY(-8deg) skewY(-2.2deg) scale(1.0);
+        transform: rotate(-12deg) rotateY(-2deg) skewY(-2.5deg) scaleY(0.99);
       }
     }
 
-    @keyframes flagShimmer {
+    @keyframes flagFlutterShimmer {
       0% {
-        background-position: 0% 0;
+        background-position: -30% 0;
       }
       100% {
-        background-position: 100% 0;
+        background-position: 130% 0;
       }
     }
 
@@ -217,45 +224,46 @@
 
     @media (max-width: 768px) {
       .hero-flag-wrapper {
-        top: 14px;
-        left: 16px;
+        top: 10px;
+        left: 10px;
       }
       .danebrog-waving {
-        width: 100px;
-        height: 74px;
+        width: 86px;
+        height: 63px;
       }
       .flag-cross-v {
-        left: 32px;
-        width: 11px;
+        left: 27px;
+        width: 9.5px;
       }
       .flag-cross-h {
-        top: 31px;
-        height: 11px;
+        top: 27px;
+        height: 9.5px;
       }
     }
 
     @media (max-width: 600px) {
       header {
-        padding-top: 68px;
+        padding-top: 55px;
       }
       header h1 {
         font-size: 2.1rem;
       }
       .hero-flag-wrapper {
-        top: 10px;
-        left: 12px;
+        top: 6px;
+        left: 6px;
       }
       .danebrog-waving {
-        width: 82px;
-        height: 60px;
+        width: 62px;
+        height: 45px;
+        box-shadow: 0 4px 12px rgba(200, 16, 46, 0.22);
       }
       .flag-cross-v {
-        left: 26px;
-        width: 9px;
+        left: 20px;
+        width: 6.8px;
       }
       .flag-cross-h {
-        top: 25px;
-        height: 9px;
+        top: 19px;
+        height: 6.8px;
       }
     }
 
@@ -1016,7 +1024,7 @@
         </div>
 
         
-        <!-- Aufklappbare Kosten- & Ratenübersicht pro Familie (Richtwerte) -->
+        <!-- Aufklappbare Kosten- & Ratenübersicht pro Familie (Richtwerte aus Datenbank) -->
         <details class="cost-breakdown-details" style="background: #ffffff; border: 1.5px solid var(--sage-border); border-radius: var(--radius-md); padding: 20px 22px; margin-bottom: 26px; box-shadow: 0 4px 16px rgba(30, 54, 45, 0.05);">
           <summary style="font-size: 1.18rem; font-family: 'Fraunces', serif; color: var(--sage-deep); cursor: pointer; display: flex; align-items: center; justify-content: space-between; user-select: none;">
             <span>📊 <strong>Vorläufige Kostenübersicht & Raten pro Familie</strong></span>
@@ -1026,8 +1034,9 @@
           <!-- Disclaimer Infobox -->
           <div style="background: #fff9ed; border: 1px solid var(--amber-border); border-left: 4px solid var(--amber-warm); padding: 14px 16px; border-radius: 6px; margin: 20px 0 18px 0; font-size: 13.5px; color: #5a3809; line-height: 1.55;">
             <strong>⚠️ Wichtiger Hinweis – Vorläufiger Richtwert (noch keine Zahlungsaufforderung!):</strong><br>
-            Viele von euch haben sich gefragt, welche Kosten ungefähr auf euch zukommen. Diese Übersicht basiert auf dem <strong>aktuellen Planungsstand mit 47 Personen</strong> und soll euch eine transparente Orientierung geben, worauf ihr euch ungefähr einstellen könnt.<br>
-            <span style="color: #92400e; font-weight: 700;">Bitte jetzt noch nichts überweisen!</span> Da die Teilnahme bei einzelnen Familien (z. B. bei Familie Berg) noch nicht endgültig fixiert ist und auch Urlaubsgenehmigungen noch ausstehen, können sich die Beträge pro Familie noch leicht anpassen. <strong>Johann & Valentina geben euch rechtzeitig Bescheid, sobald alles final feststeht und die Überweisung offiziell freigegeben wird.</strong>
+            Diese Übersicht basiert auf dem <strong>aktuellen Planungsstand mit 47 Personen</strong> und soll euch eine transparente Orientierung geben, worauf ihr euch ungefähr einstellen könnt.<br><br>
+            🥖 <strong>Hinweis zur Verpflegung:</strong> Die Verpflegungskosten sind in diesen Beträgen <strong>nicht enthalten</strong>, da jedes Haus für sich die Verpflegung eigenständig übernimmt und plant. Diese Zahlen decken die Miete beider Ferienhäuser inklusive des gemeinsamen Strom- und Wasser-Nebenkostenpuffers (Gesamt: 7.074 €) ab.<br><br>
+            <span style="color: #92400e; font-weight: 700;">Bitte jetzt noch nichts überweisen!</span> Da die Teilnahme bei einzelnen Familien (z. B. Familie Berg) noch nicht endgültig fixiert ist und auch Urlaubsgenehmigungen noch ausstehen, können sich die Beträge pro Familie noch leicht anpassen. <strong>Johann & Valentina geben euch rechtzeitig Bescheid, sobald alles final feststeht und die Überweisung offiziell freigegeben wird.</strong>
           </div>
 
           <!-- Tabelle der Richtwerte -->
@@ -1039,7 +1048,7 @@
                   <th style="padding: 10px 12px; font-weight: 700; text-align: center;">Pers.</th>
                   <th style="padding: 10px 12px; font-weight: 700; text-align: right; color: var(--amber-warm);">1. Rate (Anzahlung)<br><span style="font-size: 11px; font-weight: 400; color: #8c5310;">Frist 10.11.2026</span></th>
                   <th style="padding: 10px 12px; font-weight: 700; text-align: right; color: var(--sage-deep);">2. Rate (Restsumme)<br><span style="font-size: 11px; font-weight: 400; color: var(--sage-primary);">Frist 20.09.2027 · Raten mgl.</span></th>
-                  <th style="padding: 10px 12px; font-weight: 700; text-align: right;">Gesamtkosten<br><span style="font-size: 11px; font-weight: 400; color: var(--text-muted);">Richtwert</span></th>
+                  <th style="padding: 10px 12px; font-weight: 700; text-align: right;">Gesamtkosten<br><span style="font-size: 11px; font-weight: 400; color: var(--text-muted);">Haus & Nebenkosten</span></th>
                   <th style="padding: 10px 12px; font-weight: 700; text-align: center;">Status</th>
                 </tr>
               </thead>
@@ -1048,95 +1057,95 @@
                   <td style="padding: 10px 12px;"><strong>[F01] Johann & Valentina Unruh</strong></td>
                   <td style="padding: 10px 12px; text-align: center;">6</td>
                   <td style="padding: 10px 12px; text-align: right; font-weight: 600; color: var(--amber-warm);">ca. 187 €</td>
-                  <td style="padding: 10px 12px; text-align: right; font-weight: 600; color: var(--sage-deep);">ca. 797 €</td>
-                  <td style="padding: 10px 12px; text-align: right; font-weight: 700;">ca. 984 €</td>
+                  <td style="padding: 10px 12px; text-align: right; font-weight: 600; color: var(--sage-deep);">ca. 654 €</td>
+                  <td style="padding: 10px 12px; text-align: right; font-weight: 700;">ca. 842 €</td>
                   <td style="padding: 10px 12px; text-align: center;"><span style="background: var(--sage-light); color: var(--sage-deep); padding: 2px 8px; border-radius: 10px; font-size: 11px; font-weight: 600;">Planung</span></td>
                 </tr>
                 <tr style="border-bottom: 1px solid var(--border); background: #fafbf9;">
                   <td style="padding: 10px 12px;"><strong>[F02] Alex & Alwina Kemler</strong></td>
                   <td style="padding: 10px 12px; text-align: center;">5</td>
                   <td style="padding: 10px 12px; text-align: right; font-weight: 600; color: var(--amber-warm);">ca. 181 €</td>
-                  <td style="padding: 10px 12px; text-align: right; font-weight: 600; color: var(--sage-deep);">ca. 772 €</td>
-                  <td style="padding: 10px 12px; text-align: right; font-weight: 700;">ca. 954 €</td>
+                  <td style="padding: 10px 12px; text-align: right; font-weight: 600; color: var(--sage-deep);">ca. 634 €</td>
+                  <td style="padding: 10px 12px; text-align: right; font-weight: 700;">ca. 815 €</td>
                   <td style="padding: 10px 12px; text-align: center;"><span style="background: var(--sage-light); color: var(--sage-deep); padding: 2px 8px; border-radius: 10px; font-size: 11px; font-weight: 600;">Planung</span></td>
                 </tr>
                 <tr style="border-bottom: 1px solid var(--border);">
                   <td style="padding: 10px 12px;"><strong>[F03] Johann & Lena Töws</strong></td>
                   <td style="padding: 10px 12px; text-align: center;">5</td>
                   <td style="padding: 10px 12px; text-align: right; font-weight: 600; color: var(--amber-warm);">ca. 168 €</td>
-                  <td style="padding: 10px 12px; text-align: right; font-weight: 600; color: var(--sage-deep);">ca. 714 €</td>
-                  <td style="padding: 10px 12px; text-align: right; font-weight: 700;">ca. 882 €</td>
+                  <td style="padding: 10px 12px; text-align: right; font-weight: 600; color: var(--sage-deep);">ca. 586 €</td>
+                  <td style="padding: 10px 12px; text-align: right; font-weight: 700;">ca. 754 €</td>
                   <td style="padding: 10px 12px; text-align: center;"><span style="background: var(--sage-light); color: var(--sage-deep); padding: 2px 8px; border-radius: 10px; font-size: 11px; font-weight: 600;">Planung</span></td>
                 </tr>
                 <tr style="border-bottom: 1px solid var(--border); background: #fafbf9;">
                   <td style="padding: 10px 12px;"><strong>[F04] Benny & Jenny Unruh</strong></td>
                   <td style="padding: 10px 12px; text-align: center;">6</td>
                   <td style="padding: 10px 12px; text-align: right; font-weight: 600; color: var(--amber-warm);">ca. 181 €</td>
-                  <td style="padding: 10px 12px; text-align: right; font-weight: 600; color: var(--sage-deep);">ca. 772 €</td>
-                  <td style="padding: 10px 12px; text-align: right; font-weight: 700;">ca. 954 €</td>
+                  <td style="padding: 10px 12px; text-align: right; font-weight: 600; color: var(--sage-deep);">ca. 634 €</td>
+                  <td style="padding: 10px 12px; text-align: right; font-weight: 700;">ca. 815 €</td>
                   <td style="padding: 10px 12px; text-align: center;"><span style="background: var(--sage-light); color: var(--sage-deep); padding: 2px 8px; border-radius: 10px; font-size: 11px; font-weight: 600;">Planung</span></td>
                 </tr>
                 <tr style="border-bottom: 1px solid var(--border);">
                   <td style="padding: 10px 12px;"><strong>[F05] Phillipp & Dorothee Unruh</strong></td>
                   <td style="padding: 10px 12px; text-align: center;">3</td>
                   <td style="padding: 10px 12px; text-align: right; font-weight: 600; color: var(--amber-warm);">ca. 78 €</td>
-                  <td style="padding: 10px 12px; text-align: right; font-weight: 600; color: var(--sage-deep);">ca. 332 €</td>
-                  <td style="padding: 10px 12px; text-align: right; font-weight: 700;">ca. 410 €</td>
+                  <td style="padding: 10px 12px; text-align: right; font-weight: 600; color: var(--sage-deep);">ca. 273 €</td>
+                  <td style="padding: 10px 12px; text-align: right; font-weight: 700;">ca. 351 €</td>
                   <td style="padding: 10px 12px; text-align: center;"><span style="background: var(--sage-light); color: var(--sage-deep); padding: 2px 8px; border-radius: 10px; font-size: 11px; font-weight: 600;">Planung</span></td>
                 </tr>
                 <tr style="border-bottom: 1px solid var(--border); background: #fafbf9;">
                   <td style="padding: 10px 12px;"><strong>[F06] David & Melanie Unruh</strong></td>
                   <td style="padding: 10px 12px; text-align: center;">5</td>
                   <td style="padding: 10px 12px; text-align: right; font-weight: 600; color: var(--amber-warm);">ca. 142 €</td>
-                  <td style="padding: 10px 12px; text-align: right; font-weight: 600; color: var(--sage-deep);">ca. 606 €</td>
-                  <td style="padding: 10px 12px; text-align: right; font-weight: 700;">ca. 748 €</td>
+                  <td style="padding: 10px 12px; text-align: right; font-weight: 600; color: var(--sage-deep);">ca. 498 €</td>
+                  <td style="padding: 10px 12px; text-align: right; font-weight: 700;">ca. 640 €</td>
                   <td style="padding: 10px 12px; text-align: center;"><span style="background: var(--sage-light); color: var(--sage-deep); padding: 2px 8px; border-radius: 10px; font-size: 11px; font-weight: 600;">Planung</span></td>
                 </tr>
                 <tr style="border-bottom: 1px solid var(--border);">
                   <td style="padding: 10px 12px;"><strong>[F07] Papa Johann & Mama Lena Unruh</strong></td>
                   <td style="padding: 10px 12px; text-align: center;">5</td>
                   <td style="padding: 10px 12px; text-align: right; font-weight: 600; color: var(--amber-warm);">ca. 191 €</td>
-                  <td style="padding: 10px 12px; text-align: right; font-weight: 600; color: var(--sage-deep);">ca. 814 €</td>
-                  <td style="padding: 10px 12px; text-align: right; font-weight: 700;">ca. 1.005 €</td>
+                  <td style="padding: 10px 12px; text-align: right; font-weight: 600; color: var(--sage-deep);">ca. 668 €</td>
+                  <td style="padding: 10px 12px; text-align: right; font-weight: 700;">ca. 859 €</td>
                   <td style="padding: 10px 12px; text-align: center;"><span style="background: var(--sage-light); color: var(--sage-deep); padding: 2px 8px; border-radius: 10px; font-size: 11px; font-weight: 600;">Planung</span></td>
                 </tr>
                 <tr style="border-bottom: 1px solid var(--border); background: #fafbf9;">
                   <td style="padding: 10px 12px;"><strong>[F08] Samy & Elly Unruh</strong></td>
                   <td style="padding: 10px 12px; text-align: center;">2</td>
                   <td style="padding: 10px 12px; text-align: right; font-weight: 600; color: var(--amber-warm);">ca. 78 €</td>
-                  <td style="padding: 10px 12px; text-align: right; font-weight: 600; color: var(--sage-deep);">ca. 332 €</td>
-                  <td style="padding: 10px 12px; text-align: right; font-weight: 700;">ca. 410 €</td>
+                  <td style="padding: 10px 12px; text-align: right; font-weight: 600; color: var(--sage-deep);">ca. 273 €</td>
+                  <td style="padding: 10px 12px; text-align: right; font-weight: 700;">ca. 351 €</td>
                   <td style="padding: 10px 12px; text-align: center;"><span style="background: var(--sage-light); color: var(--sage-deep); padding: 2px 8px; border-radius: 10px; font-size: 11px; font-weight: 600;">Planung</span></td>
                 </tr>
                 <tr style="border-bottom: 1px solid var(--border);">
                   <td style="padding: 10px 12px;"><strong>[F09] Lukas & Lara Unruh</strong></td>
                   <td style="padding: 10px 12px; text-align: center;">2</td>
                   <td style="padding: 10px 12px; text-align: right; font-weight: 600; color: var(--amber-warm);">ca. 78 €</td>
-                  <td style="padding: 10px 12px; text-align: right; font-weight: 600; color: var(--sage-deep);">ca. 332 €</td>
-                  <td style="padding: 10px 12px; text-align: right; font-weight: 700;">ca. 410 €</td>
+                  <td style="padding: 10px 12px; text-align: right; font-weight: 600; color: var(--sage-deep);">ca. 273 €</td>
+                  <td style="padding: 10px 12px; text-align: right; font-weight: 700;">ca. 351 €</td>
                   <td style="padding: 10px 12px; text-align: center;"><span style="background: var(--sage-light); color: var(--sage-deep); padding: 2px 8px; border-radius: 10px; font-size: 11px; font-weight: 600;">Planung</span></td>
                 </tr>
                 <tr style="border-bottom: 1px solid var(--border); background: #fafbf9;">
                   <td style="padding: 10px 12px;"><strong>[F10] Walther & Milena Hassenrik</strong></td>
                   <td style="padding: 10px 12px; text-align: center;">2</td>
                   <td style="padding: 10px 12px; text-align: right; font-weight: 600; color: var(--amber-warm);">ca. 78 €</td>
-                  <td style="padding: 10px 12px; text-align: right; font-weight: 600; color: var(--sage-deep);">ca. 332 €</td>
-                  <td style="padding: 10px 12px; text-align: right; font-weight: 700;">ca. 410 €</td>
+                  <td style="padding: 10px 12px; text-align: right; font-weight: 600; color: var(--sage-deep);">ca. 273 €</td>
+                  <td style="padding: 10px 12px; text-align: right; font-weight: 700;">ca. 351 €</td>
                   <td style="padding: 10px 12px; text-align: center;"><span style="background: var(--sage-light); color: var(--sage-deep); padding: 2px 8px; border-radius: 10px; font-size: 11px; font-weight: 600;">Planung</span></td>
                 </tr>
                 <tr style="border-bottom: 1px solid var(--border);">
                   <td style="padding: 10px 12px;"><strong>[F11] Bernhard & Irene Berg</strong></td>
                   <td style="padding: 10px 12px; text-align: center;">6</td>
                   <td style="padding: 10px 12px; text-align: right; font-weight: 600; color: var(--amber-warm);">ca. 211 €</td>
-                  <td style="padding: 10px 12px; text-align: right; font-weight: 600; color: var(--sage-deep);">ca. 897 €</td>
-                  <td style="padding: 10px 12px; text-align: right; font-weight: 700;">ca. 1.107 €</td>
+                  <td style="padding: 10px 12px; text-align: right; font-weight: 600; color: var(--sage-deep);">ca. 736 €</td>
+                  <td style="padding: 10px 12px; text-align: right; font-weight: 700;">ca. 947 €</td>
                   <td style="padding: 10px 12px; text-align: center;"><span style="background: #fff3cd; color: #856404; border: 1px solid #ffeeba; padding: 2px 8px; border-radius: 10px; font-size: 11px; font-weight: 600;">Noch offen</span></td>
                 </tr>
               </tbody>
             </table>
           </div>
           <p style="font-size: 12px; color: var(--text-muted); margin-top: 12px; text-align: right;">
-            <em>* Alle Beträge sind kaufmännisch gerundet und beinhalten Hausmiete, Nebenkostenpuffer & Verpflegung.</em>
+            <em>* Alle Beträge sind kaufmännisch gerundet und decken Hausmiete (beide Häuser) sowie Nebenkostenpuffer (Strom/Wasser) ab. Verpflegung wird hausintern geregelt.</em>
           </p>
         </details>
 
