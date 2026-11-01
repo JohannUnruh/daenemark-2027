@@ -109,29 +109,26 @@
       overflow: hidden;
     }
 
-    /* Flatternde Dänemark-Fahne (Dannebrog) oben links in der Ecke */
+    /* Feste, ruhige Dänemark-Flagge (Dannebrog) oben links in der Ecke - 100% flackerfrei & statisch */
     .hero-flag-wrapper {
       position: absolute;
       top: 14px;
-      left: 14px;
+      left: 16px;
       z-index: 10;
       pointer-events: none;
       display: flex;
       align-items: flex-start;
-      perspective: 700px;
     }
 
-    .danebrog-waving {
-      width: 112px;
-      height: 82px;
+    .danebrog-flag {
+      width: 68px;
+      height: 50px;
       background: #c8102e; /* Original Dannebrog Rot */
-      border-radius: 5px;
+      border-radius: 4px;
       position: relative;
       overflow: hidden;
-      transform-origin: 10% 50%;
-      box-shadow: 0 8px 20px rgba(200, 16, 46, 0.28), 0 2px 6px rgba(0,0,0,0.1);
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.12);
       border: 1.5px solid rgba(255, 255, 255, 0.95);
-      animation: flagFlutter 1.8s ease-in-out infinite alternate;
     }
 
     /* Weißes Skandinavisches Kreuz */
@@ -139,65 +136,17 @@
       position: absolute;
       top: 0;
       bottom: 0;
-      left: 36px;
-      width: 12px;
+      left: 22px;
+      width: 8px;
       background: #ffffff;
-      box-shadow: 0 0 2px rgba(0,0,0,0.08);
     }
     .flag-cross-h {
       position: absolute;
       left: 0;
       right: 0;
-      top: 35px;
-      height: 12px;
+      top: 21px;
+      height: 8px;
       background: #ffffff;
-      box-shadow: 0 0 2px rgba(0,0,0,0.08);
-    }
-
-    /* Flatternder Stoff-Glanz & Schatten */
-    .flag-shimmer {
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(
-        115deg,
-        rgba(255, 255, 255, 0.3) 0%,
-        rgba(0, 0, 0, 0.22) 25%,
-        rgba(255, 255, 255, 0.4) 50%,
-        rgba(0, 0, 0, 0.2) 75%,
-        rgba(255, 255, 255, 0.15) 100%
-      );
-      background-size: 200% 100%;
-      mix-blend-mode: overlay;
-      animation: flagFlutterShimmer 1.8s ease-in-out infinite alternate;
-      pointer-events: none;
-    }
-
-    /* Echtes Tuch-Flattern im Wind */
-    @keyframes flagFlutter {
-      0% {
-        transform: rotate(-13deg) rotateY(-4deg) skewY(-3deg) scaleY(0.97);
-      }
-      25% {
-        transform: rotate(-9deg) rotateY(14deg) skewY(2.5deg) scaleY(1.02);
-      }
-      50% {
-        transform: rotate(-14deg) rotateY(-6deg) skewY(-2deg) scaleY(0.98);
-      }
-      75% {
-        transform: rotate(-8deg) rotateY(12deg) skewY(3deg) scaleY(1.03);
-      }
-      100% {
-        transform: rotate(-12deg) rotateY(-2deg) skewY(-2.5deg) scaleY(0.99);
-      }
-    }
-
-    @keyframes flagFlutterShimmer {
-      0% {
-        background-position: -30% 0;
-      }
-      100% {
-        background-position: 130% 0;
-      }
     }
 
     .pill-badge {
@@ -227,43 +176,43 @@
         top: 10px;
         left: 10px;
       }
-      .danebrog-waving {
-        width: 86px;
-        height: 63px;
+      .danebrog-flag {
+        width: 56px;
+        height: 40px;
       }
       .flag-cross-v {
-        left: 27px;
-        width: 9.5px;
+        left: 18px;
+        width: 7px;
       }
       .flag-cross-h {
-        top: 27px;
-        height: 9.5px;
+        top: 17px;
+        height: 7px;
       }
     }
 
     @media (max-width: 600px) {
       header {
-        padding-top: 55px;
+        padding-top: 48px;
       }
       header h1 {
         font-size: 2.1rem;
       }
       .hero-flag-wrapper {
-        top: 6px;
-        left: 6px;
+        top: 8px;
+        left: 8px;
       }
-      .danebrog-waving {
-        width: 62px;
-        height: 45px;
-        box-shadow: 0 4px 12px rgba(200, 16, 46, 0.22);
+      .danebrog-flag {
+        width: 44px;
+        height: 32px;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.12);
       }
       .flag-cross-v {
-        left: 20px;
-        width: 6.8px;
+        left: 14px;
+        width: 5px;
       }
       .flag-cross-h {
-        top: 19px;
-        height: 6.8px;
+        top: 13px;
+        height: 5px;
       }
     }
 
@@ -758,10 +707,9 @@
   <header>
     <!-- Schräge, frei wehende Dänemark-Fahne (Dannebrog) -->
     <div class="hero-flag-wrapper" title="Dannebrog – Dänemark 2027">
-      <div class="danebrog-waving">
+      <div class="danebrog-flag">
         <div class="flag-cross-v"></div>
         <div class="flag-cross-h"></div>
-        <div class="flag-shimmer"></div>
       </div>
     </div>
 
