@@ -4,4 +4,4 @@ Zentraler Informations- und Planungs-Hub für den großen Familienurlaub in Momm
 
 - **Live GitHub Pages URL:** https://johannunruh.github.io/daenemark-2027/
 - **Häuser:** Fiskerløkken 29 & Fiskerløkken 5A, 6470 Sydals, Dänemark
-- **Koordination & Organisation:** Johann Unruh
+- **Koordination & Organisation:** Valentina & Johann Unruh
