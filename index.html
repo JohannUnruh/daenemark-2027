@@ -115,7 +115,7 @@
       overflow: hidden;
     }
 
-    /* Feste, ruhige Dänemark-Flagge (Dannebrog) oben links in der Ecke - 100% flackerfrei & statisch */
+    /* Dänemark-Flagge (Dannebrog) oben links: starr, aber wie wehender Stoff */
     .hero-flag-wrapper {
       position: absolute;
       top: 14px;
@@ -126,33 +126,11 @@
       align-items: flex-start;
     }
 
-    .danebrog-flag {
-      width: 68px;
-      height: 50px;
-      background: #c8102e; /* Original Dannebrog Rot */
-      border-radius: 4px;
-      position: relative;
-      overflow: hidden;
-      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.12);
-      border: 1.5px solid rgba(255, 255, 255, 0.95);
-    }
-
-    /* Weißes Skandinavisches Kreuz */
-    .flag-cross-v {
-      position: absolute;
-      top: 0;
-      bottom: 0;
-      left: 22px;
-      width: 8px;
-      background: #ffffff;
-    }
-    .flag-cross-h {
-      position: absolute;
-      left: 0;
-      right: 0;
-      top: 21px;
-      height: 8px;
-      background: #ffffff;
+    .hero-flag {
+      width: 88px;
+      height: auto;
+      display: block;
+      filter: drop-shadow(0 3px 6px rgba(30, 54, 45, 0.18));
     }
 
     .pill-badge {
@@ -182,17 +160,8 @@
         top: 10px;
         left: 10px;
       }
-      .danebrog-flag {
-        width: 56px;
-        height: 40px;
-      }
-      .flag-cross-v {
-        left: 18px;
-        width: 7px;
-      }
-      .flag-cross-h {
-        top: 17px;
-        height: 7px;
+      .hero-flag {
+        width: 74px;
       }
     }
 
@@ -207,18 +176,8 @@
         top: 8px;
         left: 8px;
       }
-      .danebrog-flag {
-        width: 44px;
-        height: 32px;
-        box-shadow: 0 2px 4px rgba(0,0,0,0.12);
-      }
-      .flag-cross-v {
-        left: 14px;
-        width: 5px;
-      }
-      .flag-cross-h {
-        top: 13px;
-        height: 5px;
+      .hero-flag {
+        width: 58px;
       }
     }
 
@@ -876,12 +835,50 @@
 
   <!-- Header & Hero mit schräger Dänemark-Fahne -->
   <header>
-    <!-- Schräge, frei wehende Dänemark-Fahne (Dannebrog) -->
+    <!-- Dänemark-Flagge (Dannebrog) im Wind – starr, aber mit wehendem Stoff -->
     <div class="hero-flag-wrapper" title="Dannebrog – Dänemark 2027">
-      <div class="danebrog-flag">
-        <div class="flag-cross-v"></div>
-        <div class="flag-cross-h"></div>
-      </div>
+      <svg class="hero-flag" viewBox="0 0 136 120" role="img" aria-label="Dänische Flagge (Dannebrog)">
+        <defs>
+          <clipPath id="flagClip">
+            <path d="M10,26 C32,17 54,17 70,24 C86,31 104,17 120,19 C124,19.5 126,21 127,22 L127,92 C126,91 124,89.5 120,89 C104,87 86,101 70,94 C54,87 32,87 10,96 Z"/>
+          </clipPath>
+          <linearGradient id="flagFolds" x1="0" y1="0" x2="1" y2="0">
+            <stop offset="0" stop-color="#000000" stop-opacity="0.16"/>
+            <stop offset="0.10" stop-color="#ffffff" stop-opacity="0.18"/>
+            <stop offset="0.28" stop-color="#000000" stop-opacity="0.05"/>
+            <stop offset="0.46" stop-color="#ffffff" stop-opacity="0.15"/>
+            <stop offset="0.62" stop-color="#000000" stop-opacity="0.09"/>
+            <stop offset="0.80" stop-color="#ffffff" stop-opacity="0.11"/>
+            <stop offset="0.93" stop-color="#000000" stop-opacity="0.06"/>
+            <stop offset="1" stop-color="#000000" stop-opacity="0.15"/>
+          </linearGradient>
+          <linearGradient id="flagPoleMetal" x1="0" y1="0" x2="1" y2="0">
+            <stop offset="0" stop-color="#8b9097"/>
+            <stop offset="0.35" stop-color="#f4f6f7"/>
+            <stop offset="0.7" stop-color="#a9aeb5"/>
+            <stop offset="1" stop-color="#7e838a"/>
+          </linearGradient>
+          <radialGradient id="flagPoleKnob" cx="0.35" cy="0.3" r="0.8">
+            <stop offset="0" stop-color="#f8e6b4"/>
+            <stop offset="0.55" stop-color="#d5ad57"/>
+            <stop offset="1" stop-color="#9d7a2e"/>
+          </radialGradient>
+        </defs>
+
+        <g transform="rotate(-4 10 62)">
+          <!-- Tuch -->
+          <path d="M10,26 C32,17 54,17 70,24 C86,31 104,17 120,19 C124,19.5 126,21 127,22 L127,92 C126,91 124,89.5 120,89 C104,87 86,101 70,94 C54,87 32,87 10,96 Z" fill="#c8102e"/>
+          <!-- Querbalken des Kreuzes, folgt der Welle -->
+          <path d="M10,52 C32,43 54,43 70,50 C86,57 104,43 120,45 C124,45.5 126,47 127,48 L127,60 C126,59 124,57.5 120,57 C104,55 86,69 70,62 C54,55 32,55 10,64 Z" fill="#ffffff"/>
+          <!-- Längsbalken des Kreuzes -->
+          <rect x="50" y="0" width="14" height="120" fill="#ffffff" clip-path="url(#flagClip)"/>
+          <!-- Faltenwurf / Licht & Schatten -->
+          <rect x="0" y="0" width="136" height="120" fill="url(#flagFolds)" clip-path="url(#flagClip)"/>
+          <!-- Mast -->
+          <rect x="9" y="8" width="2.8" height="108" rx="1.4" fill="url(#flagPoleMetal)"/>
+          <circle cx="10.4" cy="6.4" r="3" fill="url(#flagPoleKnob)"/>
+        </g>
+      </svg>
     </div>
 
     <div class="container">
