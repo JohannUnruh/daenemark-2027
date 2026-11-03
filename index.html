@@ -20,6 +20,9 @@
       --paper-subtle: #f4f8f6;
       --card-border: #dde7e2;
       --card-border-subtle: #e9f0ec;
+      --sage-border: #c9dcd2;
+      --surface-subtle: #f4f8f6;
+      --border: #e4ede8;
       
       --sage-deep: #1e362d;
       --sage-primary: #2d5244;
@@ -68,8 +71,6 @@
     body {
       width: 100%;
       min-height: 100%;
-
-    body {
       font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
       /* Sanfter, eleganter Pastellverlauf von Fjordgrün zu Fjordblau */
       background: linear-gradient(175deg, var(--bg-gradient-start) 0%, #f3f7f5 35%, var(--bg-gradient-end) 100%);
@@ -722,6 +723,116 @@
       transform: translateX(-50%) translateY(0);
     }
 
+    /* ===== Kostenübersicht: fixierte Namensspalte & Kopfzeile ===== */
+    .cost-table-scroll {
+      margin-top: 14px;
+      overflow: auto;
+      -webkit-overflow-scrolling: touch;
+      border: 1px solid var(--sage-border);
+      border-radius: 12px;
+      background: var(--paper);
+    }
+
+    .cost-table {
+      width: 100%;
+      border-collapse: separate;
+      border-spacing: 0;
+      font-size: 13.5px;
+      text-align: left;
+    }
+
+    .cost-table thead th {
+      position: sticky;
+      top: 0;
+      z-index: 3;
+      background: #eef4f0;
+      border-bottom: 2px solid var(--sage-border);
+      color: var(--sage-deep);
+      font-weight: 700;
+      vertical-align: bottom;
+    }
+
+    .cost-table tbody td,
+    .cost-table tfoot td {
+      border-bottom: 1px solid var(--border);
+    }
+
+    .cost-table tfoot td {
+      border-top: 2px solid var(--sage-border);
+      border-bottom: none;
+    }
+
+    /* Erste Spalte bleibt beim Wischen stehen */
+    .cost-table thead th:first-child,
+    .cost-table tbody td:first-child,
+    .cost-table tfoot td:first-child {
+      position: sticky;
+      left: 0;
+      z-index: 2;
+      background: var(--paper);
+      box-shadow: 9px 0 10px -10px rgba(30, 54, 45, 0.45);
+    }
+
+    .cost-table thead th:first-child {
+      z-index: 4;
+      background: #eef4f0;
+    }
+
+    .cost-table tbody tr:nth-child(even) td:first-child { background: #fafbf9; }
+    .cost-table tbody tr.cost-row-highlight td:first-child { background: #f0f7f3; }
+    .cost-table tfoot td:first-child { background: var(--surface-subtle); }
+
+    .cost-table td[style*="text-align: right"],
+    .cost-table th[style*="text-align: right"] {
+      font-variant-numeric: tabular-nums;
+      white-space: nowrap;
+    }
+
+    .cost-scroll-hint {
+      display: none;
+      align-items: center;
+      gap: 6px;
+      margin: 12px 0 0 0;
+      font-size: 11.5px;
+      color: var(--text-light);
+      font-weight: 600;
+    }
+
+    @media (max-width: 700px) {
+      .cost-table-scroll { max-height: 72vh; }
+
+      .cost-breakdown-details { padding: 16px 14px !important; }
+      .cost-breakdown-details summary {
+        flex-wrap: nowrap;
+        align-items: flex-start;
+        font-size: 1.05rem !important;
+      }
+      .cost-breakdown-details summary > span:first-child { flex: 1 1 auto; min-width: 0; }
+      .cost-breakdown-details summary::after { flex: 0 0 auto; line-height: 1.1; }
+      .cost-breakdown-details summary > span:last-child { display: none; }
+      .cost-table { font-size: 12px; }
+      .cost-table th,
+      .cost-table td { padding: 8px 8px !important; }
+      .cost-table thead th { font-size: 11px; }
+      .cost-table thead th .th-sub { display: none !important; }
+      .cost-table .cost-members,
+      .cost-table .cost-note { display: none !important; }
+      .cost-table tbody td:last-child span {
+        font-size: 9.5px !important;
+        padding: 1px 6px !important;
+        white-space: nowrap;
+      }
+
+      .cost-table thead th:first-child,
+      .cost-table tbody td:first-child,
+      .cost-table tfoot td:first-child {
+        min-width: 92px;
+        max-width: 108px;
+      }
+
+      .cost-scroll-hint { display: flex; }
+    }
+
     /* Footer */
     footer {
       text-align: center;
@@ -1023,21 +1134,22 @@
           </div>
 
           <!-- Tabelle der Richtwerte (1:1 aus dem Kostenrechner) -->
-          <div style="overflow-x: auto; margin-top: 14px;">
-            <table style="width: 100%; border-collapse: collapse; font-size: 13.5px; text-align: left;">
+          <p class="cost-scroll-hint">↔ Seitlich wischen für die Beträge – die Namen bleiben stehen</p>
+          <div class="cost-table-scroll">
+            <table class="cost-table">
               <thead>
-                <tr style="background: var(--surface-subtle); border-bottom: 2px solid var(--sage-border); color: var(--sage-deep);">
-                  <th style="padding: 10px 12px; font-weight: 700;">Familie / Zweig</th>
-                  <th style="padding: 10px 12px; font-weight: 700; text-align: center;">Pers.</th>
-                  <th style="padding: 10px 12px; font-weight: 700; text-align: right; color: var(--amber-warm);">1. Rate (Anzahlung)<br><span style="font-size: 11px; font-weight: 400; color: #8c5310;">Frist 10.11.2026</span></th>
-                  <th style="padding: 10px 12px; font-weight: 700; text-align: right; color: var(--sage-deep);">2. Rate (Restsumme)<br><span style="font-size: 11px; font-weight: 400; color: var(--sage-primary);">Frist 20.09.2027 · Raten mgl.</span></th>
-                  <th style="padding: 10px 12px; font-weight: 700; text-align: right;">Gesamtkosten<br><span style="font-size: 11px; font-weight: 400; color: var(--text-muted);">Haus & Nebenkosten</span></th>
-                  <th style="padding: 10px 12px; font-weight: 700; text-align: center;">Status</th>
+                <tr>
+                  <th style="padding: 10px 12px;">Familie / Zweig</th>
+                  <th style="padding: 10px 12px; text-align: center;">Pers.</th>
+                  <th style="padding: 10px 12px; text-align: right; color: var(--amber-warm);">1. Rate €<span class="th-sub" style="display: block; font-size: 11px; font-weight: 400; color: #8c5310;">Frist 10.11.2026</span></th>
+                  <th style="padding: 10px 12px; text-align: right;">2. Rate €<span class="th-sub" style="display: block; font-size: 11px; font-weight: 400; color: var(--sage-primary);">Frist 20.09.2027 · Raten mgl.</span></th>
+                  <th style="padding: 10px 12px; text-align: right;">Gesamt €<span class="th-sub" style="display: block; font-size: 11px; font-weight: 400; color: var(--text-muted);">Haus &amp; Nebenkosten</span></th>
+                  <th style="padding: 10px 12px; text-align: center;">Status</th>
                 </tr>
               </thead>
               <tbody>
                 <tr style="border-bottom: 1px solid var(--border);">
-                  <td style="padding: 10px 12px;"><strong>[F01] Unruh</strong><br><span style="font-size: 11.5px; color: var(--text-muted);">(Johann, Valentina, Leonidas, Melvin, Vincent, Simon)</span></td>
+                  <td style="padding: 10px 12px;"><strong>[F01] Unruh</strong><br><span class="cost-members" style="font-size: 11.5px; color: var(--text-muted);">(Johann, Valentina, Leonidas, Melvin, Vincent, Simon)</span></td>
                   <td style="padding: 10px 12px; text-align: center;">6</td>
                   <td style="padding: 10px 12px; text-align: right; font-weight: 600; color: var(--amber-warm);">178,77 €</td>
                   <td style="padding: 10px 12px; text-align: right; font-weight: 600; color: var(--sage-deep);">624,68 €</td>
@@ -1045,7 +1157,7 @@
                   <td style="padding: 10px 12px; text-align: center;"><span style="background: var(--sage-light); color: var(--sage-deep); padding: 2px 8px; border-radius: 10px; font-size: 11px; font-weight: 600;">Planung</span></td>
                 </tr>
                 <tr style="border-bottom: 1px solid var(--border); background: #fafbf9;">
-                  <td style="padding: 10px 12px;"><strong>[F02] Kemler</strong><br><span style="font-size: 11.5px; color: var(--text-muted);">(Alex, Alwina, Hanna, Timo, Lisa)</span></td>
+                  <td style="padding: 10px 12px;"><strong>[F02] Kemler</strong><br><span class="cost-members" style="font-size: 11.5px; color: var(--text-muted);">(Alex, Alwina, Hanna, Timo, Lisa)</span></td>
                   <td style="padding: 10px 12px; text-align: center;">5</td>
                   <td style="padding: 10px 12px; text-align: right; font-weight: 600; color: var(--amber-warm);">173,18 €</td>
                   <td style="padding: 10px 12px; text-align: right; font-weight: 600; color: var(--sage-deep);">605,16 €</td>
@@ -1053,7 +1165,7 @@
                   <td style="padding: 10px 12px; text-align: center;"><span style="background: var(--sage-light); color: var(--sage-deep); padding: 2px 8px; border-radius: 10px; font-size: 11px; font-weight: 600;">Planung</span></td>
                 </tr>
                 <tr style="border-bottom: 1px solid var(--border);">
-                  <td style="padding: 10px 12px;"><strong>[F03] Töws</strong><br><span style="font-size: 11.5px; color: var(--text-muted);">(Johann, Lena, Jona, Jeremy, Laureen)</span></td>
+                  <td style="padding: 10px 12px;"><strong>[F03] Töws</strong><br><span class="cost-members" style="font-size: 11.5px; color: var(--text-muted);">(Johann, Lena, Jona, Jeremy, Laureen)</span></td>
                   <td style="padding: 10px 12px; text-align: center;">5</td>
                   <td style="padding: 10px 12px; text-align: right; font-weight: 600; color: var(--amber-warm);">160,15 €</td>
                   <td style="padding: 10px 12px; text-align: right; font-weight: 600; color: var(--sage-deep);">559,61 €</td>
@@ -1061,7 +1173,7 @@
                   <td style="padding: 10px 12px; text-align: center;"><span style="background: var(--sage-light); color: var(--sage-deep); padding: 2px 8px; border-radius: 10px; font-size: 11px; font-weight: 600;">Planung</span></td>
                 </tr>
                 <tr style="border-bottom: 1px solid var(--border); background: #fafbf9;">
-                  <td style="padding: 10px 12px;"><strong>[F04] Unruh</strong><br><span style="font-size: 11.5px; color: var(--text-muted);">(Benny, Jenny, Julien, Lucia, Lillien, Mailin)</span></td>
+                  <td style="padding: 10px 12px;"><strong>[F04] Unruh</strong><br><span class="cost-members" style="font-size: 11.5px; color: var(--text-muted);">(Benny, Jenny, Julien, Lucia, Lillien, Mailin)</span></td>
                   <td style="padding: 10px 12px; text-align: center;">6</td>
                   <td style="padding: 10px 12px; text-align: right; font-weight: 600; color: var(--amber-warm);">173,18 €</td>
                   <td style="padding: 10px 12px; text-align: right; font-weight: 600; color: var(--sage-deep);">605,16 €</td>
@@ -1069,7 +1181,7 @@
                   <td style="padding: 10px 12px; text-align: center;"><span style="background: var(--sage-light); color: var(--sage-deep); padding: 2px 8px; border-radius: 10px; font-size: 11px; font-weight: 600;">Planung</span></td>
                 </tr>
                 <tr style="border-bottom: 1px solid var(--border);">
-                  <td style="padding: 10px 12px;"><strong>[F05] Unruh</strong><br><span style="font-size: 11.5px; color: var(--text-muted);">(Phillipp, Dorothee, Nelia)</span></td>
+                  <td style="padding: 10px 12px;"><strong>[F05] Unruh</strong><br><span class="cost-members" style="font-size: 11.5px; color: var(--text-muted);">(Phillipp, Dorothee, Nelia)</span></td>
                   <td style="padding: 10px 12px; text-align: center;">3</td>
                   <td style="padding: 10px 12px; text-align: right; font-weight: 600; color: var(--amber-warm);">74,49 €</td>
                   <td style="padding: 10px 12px; text-align: right; font-weight: 600; color: var(--sage-deep);">260,28 €</td>
@@ -1077,15 +1189,15 @@
                   <td style="padding: 10px 12px; text-align: center;"><span style="background: var(--sage-light); color: var(--sage-deep); padding: 2px 8px; border-radius: 10px; font-size: 11px; font-weight: 600;">Planung</span></td>
                 </tr>
                 <tr style="border-bottom: 1px solid var(--border); background: #fafbf9;">
-                  <td style="padding: 10px 12px;"><strong>[F06] Unruh</strong><br><span style="font-size: 11.5px; color: var(--text-muted);">(David, Melanie, Emilia, Aaron, Tiana)</span></td>
+                  <td style="padding: 10px 12px;"><strong>[F06] Unruh</strong><br><span class="cost-members" style="font-size: 11.5px; color: var(--text-muted);">(David, Melanie, Emilia, Aaron, Tiana)</span></td>
                   <td style="padding: 10px 12px; text-align: center;">5</td>
                   <td style="padding: 10px 12px; text-align: right; font-weight: 600; color: var(--amber-warm);">135,94 €</td>
                   <td style="padding: 10px 12px; text-align: right; font-weight: 600; color: var(--sage-deep);">475,02 €</td>
                   <td style="padding: 10px 12px; text-align: right; font-weight: 700;">610,96 €</td>
                   <td style="padding: 10px 12px; text-align: center;"><span style="background: var(--sage-light); color: var(--sage-deep); padding: 2px 8px; border-radius: 10px; font-size: 11px; font-weight: 600;">Planung</span></td>
                 </tr>
-                <tr style="border-bottom: 1px solid var(--border); background: #f0f7f3;">
-                  <td style="padding: 10px 12px;"><strong>[F07] Unruh</strong><br><span style="font-size: 11.5px; color: var(--text-muted);">(Papa Johann, Mama Lena, Danjel, Pia, Oma Anna)</span><br><span style="font-size: 11px; color: #2d6a4f; font-weight: 600;">🛡️ inkl. 320,00 € Stornoschutz-Übernahme</span></td>
+                <tr class="cost-row-highlight" style="background: #f0f7f3;">
+                  <td style="padding: 10px 12px;"><strong>[F07] Unruh</strong><br><span class="cost-members" style="font-size: 11.5px; color: var(--text-muted);">(Papa Johann, Mama Lena, Danjel, Pia, Oma Anna)</span><br><span class="cost-note" style="font-size: 11px; color: #2d6a4f; font-weight: 600;">🛡️ inkl. 320,00 € Stornoschutz-Übernahme</span></td>
                   <td style="padding: 10px 12px; text-align: center;">5</td>
                   <td style="padding: 10px 12px; text-align: right; font-weight: 600; color: var(--amber-warm);">253,70 €</td>
                   <td style="padding: 10px 12px; text-align: right; font-weight: 600; color: var(--sage-deep);">886,49 €</td>
@@ -1093,7 +1205,7 @@
                   <td style="padding: 10px 12px; text-align: center;"><span style="background: var(--sage-light); color: var(--sage-deep); padding: 2px 8px; border-radius: 10px; font-size: 11px; font-weight: 600;">Planung</span></td>
                 </tr>
                 <tr style="border-bottom: 1px solid var(--border); background: #fafbf9;">
-                  <td style="padding: 10px 12px;"><strong>[F08] Unruh</strong><br><span style="font-size: 11.5px; color: var(--text-muted);">(Samy, Elly Klassen)</span></td>
+                  <td style="padding: 10px 12px;"><strong>[F08] Unruh</strong><br><span class="cost-members" style="font-size: 11.5px; color: var(--text-muted);">(Samy, Elly Klassen)</span></td>
                   <td style="padding: 10px 12px; text-align: center;">2</td>
                   <td style="padding: 10px 12px; text-align: right; font-weight: 600; color: var(--amber-warm);">74,49 €</td>
                   <td style="padding: 10px 12px; text-align: right; font-weight: 600; color: var(--sage-deep);">260,28 €</td>
@@ -1101,7 +1213,7 @@
                   <td style="padding: 10px 12px; text-align: center;"><span style="background: var(--sage-light); color: var(--sage-deep); padding: 2px 8px; border-radius: 10px; font-size: 11px; font-weight: 600;">Planung</span></td>
                 </tr>
                 <tr style="border-bottom: 1px solid var(--border);">
-                  <td style="padding: 10px 12px;"><strong>[F09] Unruh</strong><br><span style="font-size: 11.5px; color: var(--text-muted);">(Lukas, Lara)</span></td>
+                  <td style="padding: 10px 12px;"><strong>[F09] Unruh</strong><br><span class="cost-members" style="font-size: 11.5px; color: var(--text-muted);">(Lukas, Lara)</span></td>
                   <td style="padding: 10px 12px; text-align: center;">2</td>
                   <td style="padding: 10px 12px; text-align: right; font-weight: 600; color: var(--amber-warm);">74,49 €</td>
                   <td style="padding: 10px 12px; text-align: right; font-weight: 600; color: var(--sage-deep);">260,28 €</td>
@@ -1109,7 +1221,7 @@
                   <td style="padding: 10px 12px; text-align: center;"><span style="background: var(--sage-light); color: var(--sage-deep); padding: 2px 8px; border-radius: 10px; font-size: 11px; font-weight: 600;">Planung</span></td>
                 </tr>
                 <tr style="border-bottom: 1px solid var(--border); background: #fafbf9;">
-                  <td style="padding: 10px 12px;"><strong>[F10] Hassenrik</strong><br><span style="font-size: 11.5px; color: var(--text-muted);">(Walther, Milena)</span></td>
+                  <td style="padding: 10px 12px;"><strong>[F10] Hassenrik</strong><br><span class="cost-members" style="font-size: 11.5px; color: var(--text-muted);">(Walther, Milena)</span></td>
                   <td style="padding: 10px 12px; text-align: center;">2</td>
                   <td style="padding: 10px 12px; text-align: right; font-weight: 600; color: var(--amber-warm);">74,49 €</td>
                   <td style="padding: 10px 12px; text-align: right; font-weight: 600; color: var(--sage-deep);">260,28 €</td>
@@ -1117,7 +1229,7 @@
                   <td style="padding: 10px 12px; text-align: center;"><span style="background: var(--sage-light); color: var(--sage-deep); padding: 2px 8px; border-radius: 10px; font-size: 11px; font-weight: 600;">Planung</span></td>
                 </tr>
                 <tr style="border-bottom: 1px solid var(--border);">
-                  <td style="padding: 10px 12px;"><strong>[F11] Berg</strong><br><span style="font-size: 11.5px; color: var(--text-muted);">(Bernhard, Irene, Amy, Dominik, Lea, Nathan)</span></td>
+                  <td style="padding: 10px 12px;"><strong>[F11] Berg</strong><br><span class="cost-members" style="font-size: 11.5px; color: var(--text-muted);">(Bernhard, Irene, Amy, Dominik, Lea, Nathan)</span></td>
                   <td style="padding: 10px 12px; text-align: center;">6</td>
                   <td style="padding: 10px 12px; text-align: right; font-weight: 600; color: var(--amber-warm);">201,12 €</td>
                   <td style="padding: 10px 12px; text-align: right; font-weight: 600; color: var(--sage-deep);">702,76 €</td>
