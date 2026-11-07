@@ -828,13 +828,243 @@
       padding-top: 30px;
       border-top: 1px solid var(--card-border);
     }
+    /* Foto-Galerie der Häuser (Cover + Streifen + Lightbox) */
+    .houses-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .houses-grid > * { min-width: 0; }
+    .house-box > div { min-width: 0; max-width: 100%; }
+    @media (max-width: 768px) {
+      .houses-grid { grid-template-columns: minmax(0, 1fr); }
+    }
+    .house-cover {
+      position: relative;
+      display: block;
+      width: calc(100% + 48px);
+      margin: -24px -24px 20px -24px;
+      padding: 0;
+      border: 0;
+      border-radius: var(--radius-md) var(--radius-md) 0 0;
+      overflow: hidden;
+      cursor: pointer;
+      background: var(--sage-light);
+      aspect-ratio: 16 / 10;
+    }
+    .house-cover img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.5s ease;
+    }
+    .house-cover:hover img { transform: scale(1.04); }
+    .house-cover::after {
+      content: '';
+      position: absolute;
+      inset: 55% 0 0 0;
+      background: linear-gradient(180deg, rgba(22, 50, 66, 0) 0%, rgba(22, 50, 66, 0.55) 100%);
+      pointer-events: none;
+    }
+    .house-cover-badge {
+      position: absolute;
+      right: 14px;
+      bottom: 14px;
+      z-index: 2;
+      background: rgba(255, 255, 255, 0.94);
+      color: var(--sage-deep);
+      font-size: 13px;
+      font-weight: 700;
+      padding: 7px 14px;
+      border-radius: var(--radius-full);
+      box-shadow: 0 2px 10px rgba(22, 50, 66, 0.25);
+    }
+    .photo-strip {
+      display: flex;
+      gap: 8px;
+      overflow-x: auto;
+      margin: -6px 0 18px 0;
+      padding-bottom: 6px;
+      scroll-snap-type: x proximity;
+      -webkit-overflow-scrolling: touch;
+    }
+    .photo-strip button {
+      flex: 0 0 auto;
+      width: 76px;
+      height: 56px;
+      padding: 0;
+      border: 2px solid transparent;
+      border-radius: 10px;
+      overflow: hidden;
+      cursor: pointer;
+      background: var(--sage-light);
+      scroll-snap-align: start;
+      transition: border-color 0.2s ease, transform 0.2s ease;
+    }
+    .photo-strip button:hover { border-color: var(--ocean-primary); transform: translateY(-1px); }
+    .photo-strip img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .photo-strip .more {
+      width: 76px;
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--sage-deep);
+      font-family: inherit;
+    }
+    .house-chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 7px;
+      margin: 0 0 14px 0;
+    }
+    .house-chips span {
+      background: var(--sage-light);
+      color: var(--sage-deep);
+      border: 1px solid var(--sage-border);
+      font-size: 12.5px;
+      font-weight: 600;
+      padding: 5px 11px;
+      border-radius: var(--radius-full);
+      white-space: nowrap;
+    }
+    .house-chips.ocean span {
+      background: var(--ocean-light);
+      color: var(--ocean-deep);
+      border-color: var(--ocean-border);
+    }
+
+    /* Hero mit Hausfotos (zum Zurückbauen: Klasse has-photos am <header> und Block .hero-photos entfernen) */
+    header.has-photos {
+      background: none;
+      padding: 64px 0 52px 0;
+    }
+    .hero-photos {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      z-index: 0;
+    }
+    .hero-photos img {
+      flex: 1 1 50%;
+      width: 50%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+    .hero-photos::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, rgba(14, 34, 46, 0.55) 0%, rgba(14, 34, 46, 0.72) 100%);
+    }
+    header.has-photos .container { position: relative; z-index: 2; }
+    header.has-photos h1 { color: #ffffff; text-shadow: 0 2px 18px rgba(0, 0, 0, 0.35); }
+    header.has-photos p.lead { color: #eaf3ee; text-shadow: 0 1px 10px rgba(0, 0, 0, 0.35); }
+    @media (max-width: 600px) {
+      header.has-photos { padding-top: 70px; }
+      .hero-photos img:last-child { display: none; }
+      .hero-photos img:first-child { width: 100%; flex-basis: 100%; }
+    }
+
+    /* Strand-Band mit Countdown */
+    .beach-band {
+      position: relative;
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      margin: 8px 0 40px 0;
+      min-height: 230px;
+      display: flex;
+      align-items: flex-end;
+      box-shadow: var(--shadow-card);
+      background: var(--ocean-light);
+    }
+    .beach-band img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .beach-band::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, rgba(14, 34, 46, 0) 30%, rgba(14, 34, 46, 0.72) 100%);
+    }
+    .beach-band-text {
+      position: relative;
+      z-index: 2;
+      padding: 24px 28px;
+      color: #ffffff;
+    }
+    .beach-band-text .serif-font {
+      color: #ffffff;
+      font-size: 1.5rem;
+      margin-bottom: 4px;
+      text-shadow: 0 2px 14px rgba(0, 0, 0, 0.4);
+    }
+    .beach-band-text p { font-size: 14px; color: #e6f1eb; }
+    @media (max-width: 600px) {
+      .beach-band { min-height: 200px; }
+      .beach-band-text { padding: 18px; }
+      .beach-band-text .serif-font { font-size: 1.25rem; }
+    }
+
+    .lightbox {
+      position: fixed;
+      inset: 0;
+      z-index: 5000;
+      background: rgba(12, 28, 36, 0.94);
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 16px;
+    }
+    .lightbox.open { display: flex; }
+    .lightbox img {
+      max-width: 100%;
+      max-height: 78vh;
+      border-radius: 12px;
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.45);
+      object-fit: contain;
+    }
+    .lightbox-caption {
+      color: #e6f1eb;
+      font-size: 14px;
+      margin-top: 14px;
+      text-align: center;
+      max-width: 90vw;
+    }
+    .lightbox-caption small { display: block; color: #9fb7ab; margin-top: 2px; }
+    .lightbox button {
+      position: absolute;
+      background: rgba(255, 255, 255, 0.14);
+      color: #ffffff;
+      border: 0;
+      width: 46px;
+      height: 46px;
+      border-radius: 50%;
+      font-size: 22px;
+      cursor: pointer;
+    }
+    .lightbox button:hover { background: rgba(255, 255, 255, 0.28); }
+    .lightbox .lb-close { top: 14px; right: 14px; }
+    .lightbox .lb-prev { left: 12px; top: 50%; transform: translateY(-50%); }
+    .lightbox .lb-next { right: 12px; top: 50%; transform: translateY(-50%); }
+    @media (max-width: 600px) {
+      .house-cover { width: calc(100% + 48px); }
+      .lightbox .lb-prev, .lightbox .lb-next { top: auto; bottom: 18px; transform: none; }
+      .lightbox .lb-prev { left: 18px; }
+      .lightbox .lb-next { right: 18px; }
+    }
   </style>
 </head>
 
 <body>
 
   <!-- Header & Hero mit schräger Dänemark-Fahne -->
-  <header>
+  <header class="has-photos">
+    <div class="hero-photos" aria-hidden="true">
+      <img src="hub_bilder/haus1_08.jpg" alt="">
+      <img src="hub_bilder/haus2_01.jpg" alt="">
+    </div>
     <!-- Dänemark-Flagge (Dannebrog) im Wind – starr, aber mit wehendem Stoff -->
     <div class="hero-flag-wrapper" title="Dannebrog – Dänemark 2027">
       <svg class="hero-flag" viewBox="0 0 136 120" role="img" aria-label="Dänische Flagge (Dannebrog)">
@@ -928,14 +1158,20 @@
           <!-- Haus 1 -->
           <div class="house-box">
             <div>
+              <button type="button" class="house-cover" data-gallery="haus1" data-index="7" aria-label="Fotos von Haus 1 ansehen">
+                <img src="hub_bilder/haus1_08.jpg" alt="Haus 1, Fiskerløkken 29, mit Terrasse und Spielplatz" loading="lazy">
+                <span class="house-cover-badge">📷 28 Fotos ansehen</span>
+              </button>
+              <div class="photo-strip" data-gallery-strip="haus1"></div>
               <div class="house-tag">Haus 1 · DanCenter (Nr. 45805)</div>
               <h3 class="house-title">Fiskerløkken 29</h3>
               <div class="house-address">📍 6470 Mommark / Sydals, Dänemark</div>
               
+              <div class="house-chips">
+                <span>🏊 Innenpool mit Rutsche</span><span>🧖 Sauna</span><span>♨️ Whirlpool</span><span>🎱 Billard</span><span>🏓 Tischtennis</span><span>⚽ Kicker</span><span>🎯 Darts</span><span>🤸 Trampolin</span><span>🛝 Spielplatz</span><span>🔥 Kaminofen</span>
+              </div>
               <ul class="house-features">
                 <li>🌊 Ca. 298 m² Wohnfläche (24 Betten)</li>
-                <li>🏊 Eigener Innenpool, Whirlpool & Sauna</li>
-                <li>🎮 Aktivitätsraum mit Billard & Tischtennis</li>
                 <li>🔑 Check-in: <strong>Samstag ab 16:00 Uhr</strong></li>
                 <li>🚪 Check-out: <strong>Samstag bis 10:00 Uhr</strong></li>
               </ul>
@@ -949,14 +1185,20 @@
           <!-- Haus 2 -->
           <div class="house-box">
             <div>
+              <button type="button" class="house-cover" data-gallery="haus2" data-index="0" aria-label="Fotos von Haus 2 ansehen">
+                <img src="hub_bilder/haus2_01.jpg" alt="Haus 2, Fiskerløkken 5A, Terrasse mit Garten" loading="lazy">
+                <span class="house-cover-badge">📷 18 Fotos ansehen</span>
+              </button>
+              <div class="photo-strip" data-gallery-strip="haus2"></div>
               <div class="house-tag">Haus 2 · Admiral Strand (Nr. E10379)</div>
               <h3 class="house-title">Fiskerløkken 5A</h3>
               <div class="house-address">📍 6470 Mommark / Sydals, Dänemark</div>
               
+              <div class="house-chips ocean">
+                <span>🏊 Innenpool mit Rutsche</span><span>♨️ Whirlpool</span><span>🎱 Billard</span><span>🏓 Tischtennis</span><span>⚽ Kicker</span><span>🍸 Bar</span><span>🛋️ Sitzsack-Dachzimmer</span>
+              </div>
               <ul class="house-features">
                 <li>🌊 Ca. 302 m² Wohnfläche (24 Betten)</li>
-                <li>🏊 Eigener Innenpool, Whirlpool & Sauna</li>
-                <li>🎮 Aktivitätsraum & Spielbereich</li>
                 <li>🔑 Check-in: <strong>Samstag ab 15:00 Uhr</strong></li>
                 <li>🚪 Check-out: <strong>Samstag bis 10:00 Uhr</strong></li>
               </ul>
@@ -1109,11 +1351,11 @@
           <!-- 1. Rate -->
           <div style="background: var(--amber-light); border: 1.5px solid var(--amber-border); border-radius: var(--radius-md); padding: 22px; position: relative;">
             <div style="font-size: 11px; font-weight: 700; color: var(--amber-warm); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 4px;">1. Rate · Buchungsanzahlung</div>
-            <div style="font-size: 1.45rem; font-family: 'Fraunces', serif; color: var(--amber-warm); margin-bottom: 8px;">Eure Frist: 8. Nov. 2026</div>
+            <div style="font-size: 1.45rem; font-family: 'Fraunces', serif; color: var(--amber-warm); margin-bottom: 8px;">✅ An die Vermieter überwiesen</div>
             <p style="font-size: 14px; color: #6b4312; line-height: 1.5; margin-bottom: 12px;">
-              <strong>⚠️ Feste Einmalzahlung:</strong> Diese Anzahlung muss von jeder Familie als Gesamtsumme pünktlich überwiesen werden, um die feste Buchung beider Häuser beim Vermieter abzusichern. Die Frist beim Vermieter ist der 10.11. — deshalb brauchen wir euren Eingang bis zum 8.11.
+              <strong>Die Buchungsanzahlung ist raus:</strong> Am 07.11.2026 hat Johann die 1. Rate von insgesamt <strong>1.574,00 €</strong> an beide Vermieter überwiesen (Haus 1: 859,00 € · Haus 2: 715,00 €) — damit sind beide Häuser fest für uns gebucht, die Frist 10.11. ist eingehalten. Danke an alle, die so schnell überwiesen haben! Wer seine 1. Rate noch nicht überwiesen hat: bitte zeitnah nachholen, den Betrag findet ihr in Johanns WhatsApp.
             </p>
-            <span style="display: inline-block; background: #ffffff; color: var(--amber-warm); border: 1px solid var(--amber-border); padding: 3px 10px; border-radius: 12px; font-size: 11px; font-weight: 700;">Einmalbetrag</span>
+            <span style="display: inline-block; background: #ffffff; color: var(--amber-warm); border: 1px solid var(--amber-border); padding: 3px 10px; border-radius: 12px; font-size: 11px; font-weight: 700;">Einmalbetrag · gebucht</span>
           </div>
 
           <!-- 2. Rate -->
@@ -1154,7 +1396,7 @@
             Diese Übersicht basiert auf dem <strong>aktuellen Planungsstand mit 47 Personen</strong> und spiegelt exakt den Stand unserer internen Reisekosten-Berechnung wider.<br><br>
             🥖 <strong>Verpflegung nicht enthalten:</strong> Die Verpflegungskosten sind in diesen Beträgen <strong>nicht enthalten</strong>, da jedes der beiden Häuser seine Verpflegung und Einkäufe eigenständig plant und abrechnet. Die Gesamtkosten (7.074,00 €) decken die Miete beider Häuser inklusive des gemeinsamen Strom- und Wasser-Nebenkostenpuffers ab.<br><br>
             🛡️ <strong>Sponsoring Stornoschutz:</strong> Papa Johann übernimmt den Reiserücktritts- und Stornoschutz von 320 € für beide Häuser komplett. Dadurch sinken die Kosten für alle übrigen 10 Familien spürbar!<br><br>
-            <span style="color: #92400e; font-weight: 700;">📲 Überweisungsstart: Freitag, 6. November 2026.</span> Johann schickt euch an diesem Tag euren persönlichen Betrag samt Verwendungszweck per WhatsApp. Bitte wartet auf diese Nachricht, bevor ihr überweist — durch ausstehende Urlaubsgenehmigungen können sich einzelne Beträge noch leicht verschieben. <strong>Eure 1. Rate muss bis Sonntag, 8. November 2026 auf dem Sammelkonto eingegangen sein, damit Johann die Buchungsanzahlung beider Häuser fristgerecht bis zum 10.11. an die Vermieter überweisen kann.</strong>
+            <span style="color: #166534; font-weight: 700;">✅ Stand 07.11.2026: Die Buchungsanzahlung beider Häuser (1.574,00 €) ist an die Vermieter überwiesen.</span> Euren persönlichen Betrag samt Verwendungszweck hat Johann euch am 6. November per WhatsApp geschickt. <strong>Wer seine 1. Rate noch offen hat, überweist sie bitte zeitnah auf das Sammelkonto</strong> — sie wird für die Gesamtabrechnung gebraucht.
           </div>
 
           <!-- Tabelle der Richtwerte (1:1 aus dem Kostenrechner) -->
@@ -1306,6 +1548,15 @@
     </section>
 
 
+    <!-- Strand-Band mit Countdown -->
+    <div class="beach-band">
+      <img src="hub_bilder/haus2_18.jpg" alt="Naturstrand von Mommark mit Steinen und klarem Wasser" loading="lazy">
+      <div class="beach-band-text">
+        <div class="serif-font">Noch <span id="countdown-beach">363</span> Tage bis zum Strand</div>
+        <p>Der Naturstrand von Mommark liegt nur ca. 300 bis 400 Meter von den Häusern entfernt.</p>
+      </div>
+    </div>
+
     <!-- 5. PACKLISTE & WAS MUSS MIT? -->
     <section id="packliste">
       <div class="section-header">
@@ -1399,6 +1650,95 @@
     </div>
   </footer>
 
+  <!-- Foto-Lightbox -->
+  <div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Fotogalerie">
+    <button type="button" class="lb-close" aria-label="Schließen">✕</button>
+    <button type="button" class="lb-prev" aria-label="Voriges Foto">‹</button>
+    <img id="lb-img" src="" alt="">
+    <button type="button" class="lb-next" aria-label="Nächstes Foto">›</button>
+    <div class="lightbox-caption" id="lb-caption"></div>
+  </div>
+
+  <script>
+    (function () {
+      const G = {
+        haus1: { title: 'Haus 1 · Fiskerløkken 29', prefix: 'hub_bilder/haus1_', photos: [
+          'Frontansicht mit Terrasse', 'Terrasse mit Gartentisch', 'Große Terrasse', 'Liegestühle auf der Terrasse',
+          'Terrasse mit langer Tafel', 'Tafel unter dem Sonnenschirm', 'Terrasse und Garten', 'Haus mit Spielplatz',
+          'Das Haus im Grünen', 'Billardtisch', 'Innenpool mit Rutsche', 'Schlafboden', 'Küche', 'Spielboden mit Sitzsäcken',
+          'Wohnbereich', 'Esstisch für die ganze Gruppe', 'Küche mit Kaminofen', 'Küche mit Kochinsel', 'Kicker & Tischtennis',
+          'Lounge-Ecke', 'Wohnzimmer', 'Schlafzimmer', 'Sauna', 'Whirlpool', 'Dartraum', 'Trampolin', 'Spielplatz mit Rutsche',
+          'Strand von Mommark'] },
+        haus2: { title: 'Haus 2 · Fiskerløkken 5A', prefix: 'hub_bilder/haus2_', photos: [
+          'Terrasse und Garten', 'Innenpool mit Rutsche', 'Spielbereich mit Tischtennis & Billard', 'Billardtisch', 'Küche',
+          'Wohn- und Essbereich', 'Schlafzimmer', 'Schlafzimmer', 'Dachzimmer mit Sitzsäcken', 'Wohnzimmer', 'Wohnzimmer',
+          'Bar & Kicker', 'Zimmer mit Etagenbett', 'Essbereich', 'Whirlpool', 'Terrasse', 'Terrasse und Innenhof',
+          'Strand von Mommark'] }
+      };
+      const pad = n => String(n + 1).padStart(2, '0');
+      const full = (k, i) => G[k].prefix + pad(i) + '.jpg';
+      const thumb = (k, i) => G[k].prefix.replace('hub_bilder/', 'hub_bilder/thumbs/') + pad(i) + '.jpg';
+
+      const lb = document.getElementById('lightbox');
+      const lbImg = document.getElementById('lb-img');
+      const lbCap = document.getElementById('lb-caption');
+      let cur = { k: null, i: 0 };
+
+      function show(k, i) {
+        const n = G[k].photos.length;
+        cur = { k: k, i: (i + n) % n };
+        lbImg.src = full(cur.k, cur.i);
+        lbImg.alt = G[k].photos[cur.i];
+        lbCap.innerHTML = G[k].photos[cur.i] + '<small>' + G[k].title + ' · ' + (cur.i + 1) + ' / ' + n + '</small>';
+        lb.classList.add('open');
+        document.body.style.overflow = 'hidden';
+      }
+      function close() { lb.classList.remove('open'); document.body.style.overflow = ''; lbImg.src = ''; }
+      function step(d) { if (lb.classList.contains('open')) show(cur.k, cur.i + d); }
+
+      document.querySelectorAll('[data-gallery-strip]').forEach(strip => {
+        const k = strip.getAttribute('data-gallery-strip');
+        const total = G[k].photos.length, shown = 9;
+        for (let i = 0; i < Math.min(shown, total); i++) {
+          const b = document.createElement('button');
+          b.type = 'button';
+          b.setAttribute('aria-label', G[k].photos[i]);
+          b.innerHTML = '<img src="' + thumb(k, i) + '" alt="' + G[k].photos[i] + '" loading="lazy">';
+          b.addEventListener('click', () => show(k, i));
+          strip.appendChild(b);
+        }
+        if (total > shown) {
+          const m = document.createElement('button');
+          m.type = 'button';
+          m.className = 'more';
+          m.textContent = '+' + (total - shown);
+          m.addEventListener('click', () => show(k, shown));
+          strip.appendChild(m);
+        }
+      });
+      document.querySelectorAll('.house-cover').forEach(c => {
+        c.addEventListener('click', () => show(c.getAttribute('data-gallery'), parseInt(c.getAttribute('data-index'), 10) || 0));
+      });
+      lb.querySelector('.lb-close').addEventListener('click', close);
+      lb.querySelector('.lb-prev').addEventListener('click', () => step(-1));
+      lb.querySelector('.lb-next').addEventListener('click', () => step(1));
+      lb.addEventListener('click', e => { if (e.target === lb) close(); });
+      document.addEventListener('keydown', e => {
+        if (e.key === 'Escape') close();
+        else if (e.key === 'ArrowLeft') step(-1);
+        else if (e.key === 'ArrowRight') step(1);
+      });
+      let sx = null;
+      lb.addEventListener('touchstart', e => { sx = e.touches[0].clientX; }, { passive: true });
+      lb.addEventListener('touchend', e => {
+        if (sx === null) return;
+        const dx = e.changedTouches[0].clientX - sx;
+        if (Math.abs(dx) > 50) step(dx < 0 ? 1 : -1);
+        sx = null;
+      });
+    })();
+  </script>
+
   <!-- Copy Toast Popup -->
   <div id="copy-toast">✓ IBAN erfolgreich kopiert!</div>
 
@@ -1415,6 +1755,8 @@
       if (el && diffDays > 0) {
         el.innerHTML = `Noch <strong>${diffDays} Tage</strong> Vorfreude`;
       }
+      const beach = document.getElementById('countdown-beach');
+      if (beach && diffDays > 0) beach.textContent = diffDays;
     }
     updateCountdown();
 
